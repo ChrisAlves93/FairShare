@@ -14,26 +14,29 @@ declare global {
 }
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.cookie;
+  let token;
 
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies?.token) {
+    token = req.cookies.token;
+  }
 
-  if (!authHeader || !authHeader.startsWith("Bearer")) {
+  if (!token) {
     return res.status(statusCode.authError).json({
-      message: "Invalid token",
+      message: "No token provided",
     });
   }
 
-  const token = authHeader?.split("=")[1];
-
+  
   try {
-    const decoded: JwtPayload = jwt.verify(token!, env.JWT_SECRET) as JwtPayload;
-
+    const decoded = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
     req.userId = decoded.userId;
 
     next();
   } catch (error) {
     return res.status(statusCode.authError).json({
-      message: "Auth error",
+      message: "Invalid or expired token",
     });
   }
 };
