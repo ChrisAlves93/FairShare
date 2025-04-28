@@ -8,10 +8,10 @@ import { Toaster } from "./components/ui/toaster.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme"> {/* Set defaultTheme to "light" */}
       <BrowserRouter>
         <App />
-        <Toaster/>
+        <Toaster />
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>

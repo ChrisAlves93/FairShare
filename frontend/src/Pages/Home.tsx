@@ -6,40 +6,59 @@ import { Spotlight } from "@/components/ui/Spotlight";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 const words =
-  "Your all-in-one payment solution with a user-friendly dashboard for effortless financial management.";
+  "Because managing money with friends shouldn't feel like math class.";
 
 const Home: FC = () => {
   return (
     <motion.div
-      className=" rounded-3xl md:mt-6 h-[45rem]  p-2 md:p-4 "
+      className="relative flex flex-col justify-center items-center text-center min-h-[90vh] overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 1 }}
     >
+      {/* Background Light Effect */}
       <Spotlight
-        className="left-0 top-20 md:left-32  md:top-0 lg:left-64 lg:-top-60"
+        className="absolute left-0 top-20 md:left-32 md:top-0 lg:left-64 lg:-top-60 opacity-20 blur-2xl"
         fill="white"
       />
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="flex flex-col justify-center items-center gap-2 tracking-tighter text-[clamp(4rem,5vw,3rem)] leading-tight md:leading-tight font-medium mb-6 mt-16  md:inline">
-          <span>Seamless.</span>{" "}
-          <span className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent font-black">
-            Payment.
-          </span>{" "}
-          <span>Experience.</span>
+
+      {/* Hero Content */}
+      <div className="z-10 flex flex-col justify-center items-center px-4">
+        <h1 className="tracking-tight text-[clamp(3rem,5vw,4rem)] leading-[1.1] font-bold mb-6 mt-16">
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="block"
+          >
+            Sharing Bills{" "}
+            <span className="bg-gradient-to-r from-teal-400 via-purple-500 to-orange-500 bg-clip-text text-transparent animate-gradient">
+              Without the Thrills
+            </span>{" "}
+            (or Fights...){" "}
+          </motion.span>
         </h1>
 
+
+        {/* Subtext */}
         <TextGenerateEffect
-          className="text-center font-light text-[2rem]"
+          className="text-center font-light text-lg md:text-2xl max-w-2xl mx-auto mb-10"
           words={words}
         />
 
-        <Button
-          asChild
-          className="mt-8 inline-flex h-14 animate-shimmer items-center justify-center rounded-full  border border-[#26CCC2]/50 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 md:w-[15rem] w-[12rem]"
+        {/* Get Started Button */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <Link to="/signup">Get Started</Link>
-        </Button>
+          <Button
+            asChild
+            className="inline-flex h-14 items-center justify-center rounded-full border-2 border-teal-400/50 bg-gradient-to-r from-black via-gray-900 to-black bg-[length:200%_100%] hover:scale-105 hover:shadow-lg transition-all duration-300 px-8 font-semibold text-white"
+          >
+            <Link to="/signup">Get Started</Link>
+          </Button>
+        </motion.div>
       </div>
     </motion.div>
   );
