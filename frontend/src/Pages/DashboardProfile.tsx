@@ -154,7 +154,7 @@ const DashboardProfile: FC<DashboardProfileProps> = ({}) => {
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your updated firstname"
+                        placeholder="Enter your updated First Name"
                         {...field}
                       />
                     </FormControl>
@@ -171,7 +171,7 @@ const DashboardProfile: FC<DashboardProfileProps> = ({}) => {
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your updated lastname"
+                        placeholder="Enter your updated Last Name"
                         {...field}
                       />
                     </FormControl>

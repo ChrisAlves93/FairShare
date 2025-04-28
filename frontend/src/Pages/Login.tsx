@@ -49,15 +49,22 @@ const Login = () => {
         username: username.trim(),
         password: password,
       };
-
+  
       const response = await axiosInstance.post("/user/login", requestData);
-
+  
       if (response.status === 200) {
         const user = response.data.userDTO;
+        const token = response.data.token; // 🔥 get the token from response
+  
+        if (token) {
+          localStorage.setItem("token", token); // 🔥 Save it to localStorage
+        }
+  
         toast({
           description: "Logged in successfully",
         });
-        await login(user);
+  
+        await login(user); // your custom login logic
       } else {
         toast({
           description: "Error logging in",
@@ -69,6 +76,7 @@ const Login = () => {
       });
     }
   }
+  
   return (
     <div className="w-screen h-screen">
       <div className="grid grid-cols-1 lg:grid-cols-2">

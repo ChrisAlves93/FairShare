@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import axiosInstance from "@/api/axiosInstance";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { motion } from "framer-motion";
 
 interface DashboardHomeProps {}
 
@@ -28,9 +29,9 @@ const DashboardHome: FC<DashboardHomeProps> = ({}) => {
     getUser();
   }, []);
 
-  const {logout} = useAuth()
+  const { logout } = useAuth();
   const { toast } = useToast();
-  // const navigate = useNavigate();
+
   const handleLogout = async () => {
     const res = await axiosInstance.post("/user/logout");
 
@@ -38,7 +39,6 @@ const DashboardHome: FC<DashboardHomeProps> = ({}) => {
       toast({
         description: "Logged out successfully",
       });
-      // navigate("/");
       logout();
     } else {
       toast({
@@ -52,6 +52,26 @@ const DashboardHome: FC<DashboardHomeProps> = ({}) => {
       <DashboardHeader user={user} handlefn={handleLogout} />
       <Separator className="bg-slate-100/30 my-4" />
       <UserBalance />
+
+      {/* Updated Soon To Be Section */}
+      <motion.div
+        className="soon-to-be mt-12 p-6 bg-[#1d2730] rounded-lg w-full md:w-2/3 mx-auto border border-[#2b3c4b] shadow-lg"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-2xl font-semibold mb-4 text-center text-white">⚠️ Under Construction ⚠️</h2>
+        <p className="text-center text-gray-300 mb-4">
+          Here's what's coming soon to your Dashboard!!!:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 text-gray-300">
+          <li>Real-time transaction notifications</li>
+          <li>Improved user activity insights</li>
+          <li>Advanced budgeting tools</li>
+          <li>Personalized financial advice</li>
+          <li>Personalized Usernames instead of encrypted ID's</li>
+        </ul>
+      </motion.div>
     </div>
   );
 };

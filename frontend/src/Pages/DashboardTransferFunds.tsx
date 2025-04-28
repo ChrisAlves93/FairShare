@@ -3,6 +3,7 @@ import DashboardHeader from "./DashboardHeader";
 import { Separator } from "@/components/ui/separator";
 import SearchBar from "@/components/SearchBar";
 import TransferMoneyCard from "@/components/TransferMoneyCard";
+import RecentTransfers from "@/components/ui/recenttransfers";
 
 interface DashboardTransferFundsProps {}
 
@@ -33,19 +34,27 @@ const DashboardTransferFunds: FC<DashboardTransferFundsProps> = ({}) => {
       <DashboardHeader text="Transfer funds" />
       <Separator className="bg-slate-100/30 my-4" />
 
-      <SearchBar setRecepient={setRecepient}/>
-
+      {/* Search Bar */}
+      <SearchBar setRecepient={setRecepient} />
+      
       <div>
         <div className="flex flex-col gap-2 mb-5 md:mb-5">
-          <h2 className="mt-4 md:mt-12  text-2xl font-normal ">
+          <h2 className="mt-4 md:mt-12 text-2xl font-normal">
             Transfer Money
           </h2>
           <p className="text-muted-foreground text-sm">
             You can search for users whom you want to transfer money or enter
-            the recepient details.
+            the recipient details.
           </p>
         </div>
-        <TransferMoneyCard recepient={recepient}/>
+
+        {/* Transfer Form */}
+        <TransferMoneyCard recepient={recepient} />
+
+        {/* Recent Transfers List */}
+        <div className="mt-12">
+          <RecentTransfers />
+        </div>
       </div>
     </div>
   );

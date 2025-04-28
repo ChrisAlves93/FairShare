@@ -16,6 +16,19 @@ import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import axiosInstance from "@/api/axiosInstance";
 
+
+const expenseTypes = [
+  "Food",
+  "Rent",
+  "Shopping",
+  "Transportation",
+  "Utilities",
+  "Entertainment",
+  "Healthcare",
+  "Education",
+  "Other",
+];
+
 interface User {
   _id: string;
   username: string;
@@ -29,7 +42,8 @@ interface TransferMoneyCardProps {
 
 const formSchema = z.object({
   userid: z.string(),
-  amount: z.string().min(1, "Amount should not be less than ₹0"),
+  amount: z.string().min(1, "Amount should not be less than $0"),
+  expenses: z.string().min(1, "Expense type is required"),
 });
 
 const TransferMoneyCard: FC<TransferMoneyCardProps> = ({ recepient }) => {
@@ -39,19 +53,21 @@ const TransferMoneyCard: FC<TransferMoneyCardProps> = ({ recepient }) => {
     defaultValues: {
       userid: "",
       amount: "",
+      expenses: "",
     },
   });
 
   const transferMoney = async (values: z.infer<typeof formSchema>) => {
     try {
-      // Convert amount to number
       const amount = Number(values.amount);
-
-      const res = await axiosInstance.post("/account/transfer", {
+  
+      // Updated the API request URL, no need to include /api/v1
+      const res = await axiosInstance.post("/transfer/create", {  // FIXED here
         to: recepient?._id,
         amount: amount,
+        expenses: values.expenses,
       });
-
+  
       if (res.status === 200) {
         toast({
           description: res.data.message,
@@ -64,7 +80,7 @@ const TransferMoneyCard: FC<TransferMoneyCardProps> = ({ recepient }) => {
       });
     }
   };
-
+  
   return (
     <div className="bg-background w-full p-4 md:p-8 rounded-lg relative overflow-hidden">
       <h1 className="font-semibold text-xl mb-4">Recepient details</h1>
@@ -82,7 +98,7 @@ const TransferMoneyCard: FC<TransferMoneyCardProps> = ({ recepient }) => {
                   <FormLabel>User id</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="User Id of recepient"
+                      placeholder="User ID of recepient"
                       {...field}
                       value={recepient?._id || ""}
                     />
@@ -100,6 +116,31 @@ const TransferMoneyCard: FC<TransferMoneyCardProps> = ({ recepient }) => {
                   <FormLabel>Amount</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter the amount" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="expenses"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expenses</FormLabel>
+                  <FormControl>
+                  <select
+                    {...field}
+                    className="w-full rounded-md border border-input bg-background py-2 px-3 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                  >
+                    <option value="">Select Expense Type</option>
+                    {expenseTypes.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
                   </FormControl>
 
                   <FormMessage />
