@@ -1,7 +1,5 @@
 # FairShare
 
-![FairShare](./frontend/public/assets/project-FairShare.jpg)
-
 #### A payment platform facilitating user sign-up, seamless peer-to-peer transactions, and efficient user search functionalities for easy money transfers.
 
 ---
